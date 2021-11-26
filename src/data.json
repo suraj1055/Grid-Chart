@@ -1,0 +1,8 @@
+[
+    { "id": 1, "Injection_Speed": 0.5}, 
+    { "id": 2, "Injection_Speed": 1},
+    { "id": 3, "Injection_Speed": 2},
+    { "id": 4, "Injection_Speed": 3},
+    { "id": 5, "Injection_Speed": 4}
+]
+
