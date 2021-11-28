@@ -5,8 +5,54 @@ import './App.css'
 const App = () => {
   const row1 = [];
   const [row, setRow] = useState();
-  const [NewRow, setNewRow] = useState([1,2,3,4,5]);
-  const [allRowsAdded, updateAllRows] = useState(5);
+  const [NewRow, setNewRow] = useState([]);
+  const [NewRow2, setNewRow2] = useState([0,1,2,3,4]);
+  const [allRowsAdded, updateAllRows] = useState(0);
+  const [viscosity, setViscosity] = useState([]);
+
+  const [IntensificationRatio, setIntensificationRatio] = useState()
+  const [editFormData, setEditFormData] = useState({
+    Injection_Speed: "",
+    Fill_Time: "",
+    Peak_Inj_Press: "",
+    Viscosity: "",
+    Shear_Rate: "",
+    Absolute_Drop_Viscosity: ""
+  })
+  const [isRowId, setIsRowId] = useState(null)
+
+  const handleEditFormChange = (event) => {
+    event.preventDefault();
+
+    const fieldName = event.target.getAttribute("name");
+    const fieldValue = event.target.value;
+
+    const newFormData = { ...editFormData };
+    newFormData[fieldName] = fieldValue;
+
+    setEditFormData(newFormData);
+  }
+
+  const handleEditFormSubmit = (event) => {
+      event.preventDefault();
+
+      const editedValue = {
+        id: isRowId,
+        Injection_Speed: editFormData.Injection_Speed,
+        Fill_Time: editFormData.Fill_Time,
+        Peak_Inj_Press: editFormData.Peak_Inj_Press,
+        Viscosity: editFormData.Fill_Time * editFormData.Peak_Inj_Press * IntensificationRatio,
+        Shear_Rate: 1 / editFormData.Fill_Time
+      }
+
+      const newValues = [...NewRow2];
+
+      const index = NewRow2.findIndex((value) => value === isRowId)
+
+      newValues[index] = editedValue;
+      
+      setNewRow2(newValues);
+  }
 
   const addRow = (e) => {
     e.preventDefault();
@@ -83,10 +129,31 @@ const App = () => {
               </tr>
             </thead>
             <tbody className="grid_style">
+              {NewRow2.map((element, rowId) => {
+                return (
+                  <tr key={rowId}>
+
+                    <td> <input type='text' className="form-control" defaultValue={element.Injection_Speed} name="Injection_Speed" onChange={handleEditFormChange} onClick={() => demo(rowId)} /> </td>
+
+                    <td> <input type='text' className="form-control" defaultValue={element.Fill_Time} name="Fill_Time" onChange={handleEditFormChange} onClick={() => demo(rowId)}/></td>
+
+                    <td><input type='text' className="form-control" defaultValue={element.Peak_Inj_Press} name="Peak_Inj_Press" onChange={handleEditFormChange} onClick={() => demo(rowId)}/> </td>
+
+                    <td> <input type='text' className="form-control" name="Viscosity" value={isNaN(Math.round(element.Viscosity)) ? '-' : Math.round(element.Viscosity) } onChange={handleEditFormChange} onClick={() => demo(rowId)} readOnly/> </td>
+
+                    <td>  <input type='text' className="form-control" name="Shear_Rate" value={isNaN(Number(element.Shear_Rate).toFixed(3)) ? '-' : Number(element.Shear_Rate).toFixed(3)} readOnly /> </td>
+
+                    <td> <input type='text' className="form-control" readOnly /></td>
+
+                    <td> <input type='text' className="form-control" readOnly /></td>
+
+                    <td> <i className="fa fa-trash viscocity_icons" onClick={() => deleteRow2(element)}></i> </td>
+                  </tr>
+                )
+              })}
               {NewRow.map((rowId) => {
               return (
                 <tr key={rowId}>
-                  <td> {rowId} </td>
                   <td>
                     <input type="text" className="form-control" />
                   </td>
