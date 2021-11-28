@@ -68,12 +68,16 @@ const App = () => {
 
   };
 
-  const deleteRow = (id) => {
-    const updatedRows = [...NewRow].filter((rowId) => {
+  const deleteRow2 = (id) => {
+    const updatedRows = [...NewRow2].filter((rowId) => {
       return rowId !== id;
     });
     setNewRow(updatedRows);
   };
+
+  const demo = (id) => {
+    setIsRowId(id);
+  }
 
   return (
     <>
@@ -86,7 +90,7 @@ const App = () => {
 
       </div>
       <div className="container">
-        <form >
+        <form onSubmit={handleEditFormSubmit}>
           <Table striped bordered hover responsive variant="light">
             <thead>
               <tr>
@@ -151,40 +155,6 @@ const App = () => {
                   </tr>
                 )
               })}
-              {NewRow.map((rowId) => {
-              return (
-                <tr key={rowId}>
-                  <td>
-                    <input type="text" className="form-control" />
-                  </td>
-                  <td>
-                    <input type="text" className="form-control" />
-                  </td>
-                  <td>
-                    <input type="text" className="form-control" />
-                  </td>
-                  <td>
-                    <input type="text" className="form-control" readOnly />
-                  </td>
-                  <td>
-                    <input type="text" className="form-control" readOnly />
-                  </td>
-                  <td>
-                    <input type="text" className="form-control" readOnly />
-                  </td>
-                  <td>
-                    <input type="text" className="form-control" readOnly />
-                  </td>
-                  <td>
-                    <i
-                      className="fa fa-trash viscocity_icons"
-                      onClick={() => deleteRow(rowId)}
-                    >
-                    </i>
-                  </td>
-                </tr>
-              );
-            })}
             </tbody>
           </Table>
          
