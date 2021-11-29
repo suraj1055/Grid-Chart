@@ -174,6 +174,7 @@ const App = () => {
             </tbody>
           </Table>
           <button type="submit" className="mt-4"> Calculate </button>
+          
         </form>
       </div>
     </>
