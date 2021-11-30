@@ -105,17 +105,12 @@ const App = () => {
         </form>
         <button onClick={increaseRow}> Add </button>
 
-
       </div>
       <div className="container">
-      <form onSubmit={handleEditFormSubmit}>
+        <form onSubmit={handleEditFormSubmit}>
           <Table striped bordered hover responsive variant="light">
             <thead>
               <tr>
-                <th>
-                  {" "}
-                  <h6> No. </h6>{" "}
-                </th>
                 <th>
                   {" "}
                   <h6> Injection Speed </h6>{" "}
@@ -155,15 +150,13 @@ const App = () => {
                 return (
                   <tr key={rowId}  >
 
-                    <td> {rowId } </td>
+                    <td> <input type='text' className="form-control" defaultValue={NewRow2[rowId].Injection_Speed} name="Injection_Speed" onChange={handleEditFormChange} /> </td>
 
-                    <td> <input type='text' className="form-control" defaultValue={NewRow2[rowId].Injection_Speed} name="Injection_Speed" onChange={handleEditFormChange} onClick={() => setId(rowId)}/> </td>
-
-                    <td> <input type='text' className="form-control" defaultValue={NewRow2[rowId].Fill_Time} name="Fill_Time" onChange={handleEditFormChange} /></td>
+                    <td> <input type='text' className="form-control" defaultValue={NewRow2[rowId].Fill_Time} name="Fill_Time" onChange={handleEditFormChange} /> </td>
 
                     <td><input type='text' className="form-control" defaultValue={NewRow2[rowId].Peak_Inj_Press} name="Peak_Inj_Press" onChange={handleEditFormChange} /> </td>
 
-                    <td> <input type='text' className="form-control" name="Viscosity" value={isNaN(Math.round(element.Viscosity)) ? '-' : Math.round(element.Viscosity)} readOnly /> </td>
+                    <td> <input type='text' className="form-control" name="Viscosity" value={isNaN(Math.round(NewRow2[rowId].Viscosity)) ? '-' : Math.round(element.Viscosity)} readOnly /> </td>
 
                     <td>  <input type='text' className="form-control" name="Shear_Rate" value={isNaN(Number(element.Shear_Rate)) ? '-' : Number(element.Shear_Rate).toFixed(3)} readOnly /> </td>
 
