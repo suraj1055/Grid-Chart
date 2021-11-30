@@ -146,11 +146,11 @@ const App = () => {
                 return (
                   <tr key={rowId} onClick={() => setId(rowId)}>
 
-                    <td> <input type='text' className="form-control" value={NewRow2[rowId].Injection_Speed} name="Injection_Speed" onChange={handleEditFormChange} /> </td>
+                    <td> <input type='text' className="form-control" defaultValue={NewRow2[rowId].Injection_Speed} name="Injection_Speed" onChange={handleEditFormChange} /> </td>
 
-                    <td> <input type='text' className="form-control" value={NewRow2[rowId].Fill_Time} name="Fill_Time" onChange={handleEditFormChange} /> </td>
+                    <td> <input type='text' className="form-control" defaultValue={NewRow2[rowId].Fill_Time} name="Fill_Time" onChange={handleEditFormChange} /> </td>
 
-                    <td><input type='text' className="form-control" value={NewRow2[rowId].Peak_Inj_Press} name="Peak_Inj_Press" onChange={handleEditFormChange} /> </td>
+                    <td><input type='text' className="form-control" defaultValue={NewRow2[rowId].Peak_Inj_Press} name="Peak_Inj_Press" onChange={handleEditFormChange} /> </td>
 
                     <td> <input type='text' className="form-control" name="Viscosity" value={isNaN(Math.round(NewRow2[rowId].Viscosity)) ? '-' : Math.round(element.Viscosity)} readOnly /> </td>
 
