@@ -101,7 +101,7 @@ const App = () => {
       <div>
         <form>
           <input type="text" onChange={addRow} placeholder="Enter Number Of Row's" /><br />
-          <input type="text" onClick={(e) => setIntensificationRatio(e.target.value) } placeholder="Enter Number Of Row's" /><br />
+          <input type="text" onChange={(e) => setIntensificationRatio(e.target.value) } placeholder="Enter Intensification Ratio" /><br />
         </form>
         <button onClick={increaseRow}> Add </button>
 
@@ -112,7 +112,7 @@ const App = () => {
             <thead>
               <tr>
                 <th>
-                  {" "}
+                  
                   <h6> Injection Speed </h6>{" "}
                 </th>
                 <th>
@@ -148,7 +148,7 @@ const App = () => {
             <tbody className="grid_style">
               {NewRow2.map((element, rowId) => {
                 return (
-                  <tr key={rowId}  >
+                  <tr key={rowId} onClick={() => setId(rowId)} >
 
                     <td> <input type='text' className="form-control" defaultValue={NewRow2[rowId].Injection_Speed} name="Injection_Speed" onChange={handleEditFormChange} /> </td>
 
