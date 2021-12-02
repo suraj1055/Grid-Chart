@@ -1,15 +1,18 @@
 import { useState } from "react";
 import Table from "react-bootstrap/Table";
 import './App.css'
-import Read from "./Read";
 import Edit from "./Edit";
+import data from './data.json'
+import { nanoid } from 'nanoid'
 
 const App = () => {
+
   const row1 = [];
+
   const [row, setRow] = useState();
-  const [NewRow2, setNewRow2] = useState([0, 1, 2, 3, 4]);
-  const [allRowsAdded, updateAllRows] = useState(5);
-  const [isEditableId, setIseditableId] = useState(null)
+  const [NewRow2, setNewRow2] = useState(data);
+
+  // const [allRowsAdded, updateAllRows] = useState(5);
 
   const [IntensificationRatio, setIntensificationRatio] = useState()
 
@@ -24,11 +27,17 @@ const App = () => {
   const [isRowId, setIsRowId] = useState(null)
 
   const handleEditFormChange = (event) => {
+
     event.preventDefault();
+
     const fieldName = event.target.getAttribute("name");
+
     const fieldValue = event.target.value;
+
     const newFormData = { ...editFormData };
+
     newFormData[fieldName] = fieldValue;
+
     setEditFormData(newFormData);
   }
 
@@ -46,13 +55,13 @@ const App = () => {
 
     const newValues = [...NewRow2];
 
-    const index = NewRow2.findIndex((value) => value === isRowId)
+    const index = NewRow2.findIndex((value) => value.id === isRowId)
 
     newValues[index] = editedValue;
 
     setNewRow2(newValues);
 
-    console.log(newValues)
+    console.log(NewRow2)
 
   }
 
@@ -63,10 +72,18 @@ const App = () => {
 
   const increaseRow = () => {
     for (let i = 0; i < parseInt(row); i++) {
-      row1[i] = allRowsAdded + i;
+      // row1[i] = allRowsAdded + i;
+      row1.push({
+        id: nanoid(),
+        Injection_Speed: "",
+        Fill_Time: "",
+        Peak_Inj_Press: "",
+        Viscosity: "",
+        Shear_Rate: ""
+      })
     }
 
-    updateAllRows((allRowsAdded) => allRowsAdded + parseInt(row));
+    // updateAllRows((allRowsAdded) => allRowsAdded + parseInt(row));
     setNewRow2([...NewRow2, ...row1]);
   };
 
@@ -79,10 +96,6 @@ const App = () => {
 
   const setId = (id) => {
     setIsRowId(id);
-  }
-
-  const editableRow = (id) => {
-    setIseditableId(id)
   }
 
   return (
@@ -137,21 +150,11 @@ const App = () => {
               </tr>
             </thead>
             <tbody className="grid_style">
-              {NewRow2.map((element, rowId) => {
-                return (
-                  <>
-                    {isEditableId === element ?
-                      (
-                        <Edit rowId={rowId} setId={setId} NewRow2={NewRow2} handleEditFormChange={handleEditFormChange} element={element} deleteRow2={deleteRow2} />
-                      )
-                      :
-                      (
-                        <Read rowId={rowId} setId={setId} NewRow2={NewRow2} handleEditFormChange={handleEditFormChange} element={element} deleteRow2={deleteRow2} editableRow={editableRow} />
-                      )
-                    }
-                  </>
-                )
-              })}
+              {NewRow2.map((NewRow, rowId) => (
+
+                <Edit NewRow={NewRow} setId={setId} NewRow2={NewRow2} handleEditFormChange={handleEditFormChange} deleteRow2={deleteRow2} rowId={rowId} />
+
+              ))}
             </tbody>
           </Table>
           <button type="submit" className="mt-4"> Calculate </button>
