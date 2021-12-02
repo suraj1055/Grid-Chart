@@ -1,15 +1,20 @@
 import { useState } from "react";
 import Table from "react-bootstrap/Table";
 import './App.css'
+import Edit from "./Edit";
 import data from './data.json'
+import { nanoid } from 'nanoid'
 
 const App = () => {
-  const row1 = [];
-  const [row, setRow] = useState();
-  const [NewRow2, setNewRow2] = useState([0,1,2,3,4]);
-  const [allRowsAdded, updateAllRows] = useState(5);
 
-  const [IntensificationRatio, setIntensificationRatio] = useState()
+  const row1 = [];
+
+  const [row, setRow] = useState();
+  const [NewRow2, setNewRow2] = useState(data);
+
+  // const [allRowsAdded, updateAllRows] = useState(5);
+
+  const [IntensificationRatio, setIntensificationRatio] = useState(0)
 
   const [editFormData, setEditFormData] = useState({
     Injection_Speed: "",
@@ -22,16 +27,18 @@ const App = () => {
   const [isRowId, setIsRowId] = useState(null)
 
   const handleEditFormChange = (event) => {
+
     event.preventDefault();
 
     const fieldName = event.target.getAttribute("name");
+
     const fieldValue = event.target.value;
 
     const newFormData = { ...editFormData };
+
     newFormData[fieldName] = fieldValue;
 
     setEditFormData(newFormData);
-
   }
 
   const handleEditFormSubmit = (event) => {
@@ -48,11 +55,12 @@ const App = () => {
 
     const newValues = [...NewRow2];
 
-    const index = NewRow2.findIndex((value) => value === isRowId)
+    const index = NewRow2.findIndex((value) => value.id === isRowId)
 
     newValues[index] = editedValue;
 
     setNewRow2(newValues);
+
   }
 
   const addRow = (e) => {
@@ -62,31 +70,26 @@ const App = () => {
 
   const increaseRow = () => {
     for (let i = 0; i < parseInt(row); i++) {
-      row1[i] = allRowsAdded + i;
+      // row1[i] = allRowsAdded + i;
+      row1.push({
+        id: nanoid(),
+        Injection_Speed: "",
+        Fill_Time: "",
+        Peak_Inj_Press: "",
+        Viscosity: "",
+        Shear_Rate: ""
+      })
     }
 
-    updateAllRows((allRowsAdded) => allRowsAdded + parseInt(row));
+    // updateAllRows((allRowsAdded) => allRowsAdded + parseInt(row));
     setNewRow2([...NewRow2, ...row1]);
   };
 
-  // const deleteRow2 = (id) => {
-  //   const updatedRows = [...NewRow2].filter((rowId) => {
-  //     return rowId !== id;
-  //   });
-  //   setNewRow2(updatedRows);
-  // };
-
   const deleteRow2 = (id) => {
-
-    const newValues = [...NewRow2];
-
-    const index = NewRow2.findIndex((value) => value === id);
-
-    newValues.splice(index, 1);
-
-    setNewRow2(newValues);
-
-    console.log(id);
+    const updatedRows = [...NewRow2].filter((rowId) => {
+      return rowId !== id;
+    });
+    setNewRow2(updatedRows);
   };
 
   const setId = (id) => {
@@ -98,7 +101,7 @@ const App = () => {
       <div>
         <form>
           <input type="text" onChange={addRow} placeholder="Enter Number Of Row's" /><br />
-          <input type="text" onChange={(e) => setIntensificationRatio(e.target.value)} placeholder="Enter Intensification Ratio" />
+          <input type="text" onChange={(e) => setIntensificationRatio(e.target.value)} placeholder="Enter Intensification Ratio" /><br />
         </form>
         <button onClick={increaseRow}> Add </button>
 
@@ -108,8 +111,8 @@ const App = () => {
           <Table striped bordered hover responsive variant="light">
             <thead>
               <tr>
+ 
                 <th>
-                  {" "}
                   <h6> Injection Speed </h6>{" "}
                 </th>
                 <th>
@@ -143,31 +146,15 @@ const App = () => {
               </tr>
             </thead>
             <tbody className="grid_style">
-              {NewRow2.map((element, rowId) => {
-                return (
-                  <tr key={rowId} onClick={() => setId(rowId)}>
+              {NewRow2.map((NewRow, rowId) => (
 
-                    <td> <input type='text' className="form-control" defaultValue={NewRow2[rowId].Injection_Speed} name="Injection_Speed" onChange={handleEditFormChange} /> </td>
+                <Edit NewRow={NewRow} setId={setId} NewRow2={NewRow2} handleEditFormChange={handleEditFormChange} deleteRow2={deleteRow2} rowId={rowId} />
 
-                    <td> <input type='text' className="form-control" defaultValue={NewRow2[rowId].Fill_Time} name="Fill_Time" onChange={handleEditFormChange} /> </td>
-
-                    <td><input type='text' className="form-control" defaultValue={NewRow2[rowId].Peak_Inj_Press} name="Peak_Inj_Press" onChange={handleEditFormChange} /> </td>
-
-                    <td> <input type='text' className="form-control" name="Viscosity" value={isNaN(Math.round(NewRow2[rowId].Viscosity)) ? '-' : Math.round(element.Viscosity)} readOnly /> </td>
-
-                    <td>  <input type='text' className="form-control" name="Shear_Rate" value={isNaN(Number(element.Shear_Rate)) ? '-' : Number(element.Shear_Rate).toFixed(3)} readOnly /> </td>
-
-                    <td> <input type='text' name="Absolute_Viscosity" value={rowId === 0 ? '-' : (isNaN(Math.round(NewRow2[rowId - 1].Viscosity - NewRow2[rowId].Viscosity)) ? '-' : Math.round(NewRow2[rowId - 1].Viscosity - NewRow2[rowId].Viscosity))} className="form-control" readOnly /></td>
-
-                    <td> <input type='text' name="Drop_Viscosity" value={rowId === 0 ? '-' : (isNaN(Number(((NewRow2[rowId - 1].Viscosity - NewRow2[rowId].Viscosity) * 100) / (NewRow2[rowId - 1].Viscosity))) ? '-' : (Number(((NewRow2[rowId - 1].Viscosity - NewRow2[rowId].Viscosity) * 100) / (NewRow2[rowId - 1].Viscosity))).toFixed(1))} className="form-control" readOnly /></td>
-
-                    <td> <i className="fa fa-trash viscocity_icons" onClick={() => deleteRow2(element)}></i> </td>
-                  </tr>
-                )
-              })}
+              ))}
             </tbody>
           </Table>
           <button type="submit" className="mt-4"> Calculate </button>
+
         </form>
       </div>
     </>
