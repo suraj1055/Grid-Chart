@@ -14,7 +14,7 @@ const App = () => {
 
   // const [allRowsAdded, updateAllRows] = useState(5);
 
-  const [IntensificationRatio, setIntensificationRatio] = useState()
+  const [IntensificationRatio, setIntensificationRatio] = useState(0)
 
   const [editFormData, setEditFormData] = useState({
     Injection_Speed: "",
@@ -60,8 +60,6 @@ const App = () => {
     newValues[index] = editedValue;
 
     setNewRow2(newValues);
-
-    console.log(NewRow2)
 
   }
 
@@ -113,9 +111,7 @@ const App = () => {
           <Table striped bordered hover responsive variant="light">
             <thead>
               <tr>
-                <th>
-                  <h6> No. </h6>{" "}
-                </th>
+ 
                 <th>
                   <h6> Injection Speed </h6>{" "}
                 </th>
