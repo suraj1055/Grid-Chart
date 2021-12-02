@@ -6,7 +6,7 @@ import data from './data.json'
 const App = () => {
   const row1 = [];
   const [row, setRow] = useState();
-  const [NewRow2, setNewRow2] = useState(data);
+  const [NewRow2, setNewRow2] = useState([0,1,2,3,4]);
   const [allRowsAdded, updateAllRows] = useState(5);
 
   const [IntensificationRatio, setIntensificationRatio] = useState()
