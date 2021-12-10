@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState } from 'react';
 import Table from "react-bootstrap/Table";
 import './App.css'
 import Edit from "./Edit";
+import Read from "./Read"
 import data from './data.json'
 import { nanoid } from 'nanoid'
 
@@ -11,8 +12,6 @@ const App = () => {
 
   const [row, setRow] = useState();
   const [NewRow2, setNewRow2] = useState(data);
-
-  // const [allRowsAdded, updateAllRows] = useState(5);
 
   const [IntensificationRatio, setIntensificationRatio] = useState(0)
 
@@ -49,7 +48,7 @@ const App = () => {
       Injection_Speed: editFormData.Injection_Speed,
       Fill_Time: editFormData.Fill_Time,
       Peak_Inj_Press: editFormData.Peak_Inj_Press,
-      Viscosity: editFormData.Fill_Time * editFormData.Peak_Inj_Press * IntensificationRatio,
+      Viscosity: editFormData.Fill_Time * editFormData.Peak_Inj_Press,
       Shear_Rate: 1 / editFormData.Fill_Time,
     }
 
@@ -61,6 +60,8 @@ const App = () => {
 
     setNewRow2(newValues);
 
+    setIsRowId(null)
+
   }
 
   const addRow = (e) => {
@@ -70,7 +71,7 @@ const App = () => {
 
   const increaseRow = () => {
     for (let i = 0; i < parseInt(row); i++) {
-      // row1[i] = allRowsAdded + i;
+
       row1.push({
         id: nanoid(),
         Injection_Speed: "",
@@ -81,19 +82,29 @@ const App = () => {
       })
     }
 
-    // updateAllRows((allRowsAdded) => allRowsAdded + parseInt(row));
     setNewRow2([...NewRow2, ...row1]);
   };
 
   const deleteRow2 = (id) => {
-    const updatedRows = [...NewRow2].filter((rowId) => {
-      return rowId !== id;
+    const updatedRows = [...NewRow2].filter((value) => {
+      return value.id !== id;
     });
     setNewRow2(updatedRows);
   };
 
-  const setId = (id) => {
-    setIsRowId(id);
+  const setId = (event, NewRow) => {
+
+    event.preventDefault();
+
+    setIsRowId(NewRow.id);
+
+    const formValues = {
+      Injection_Speed: NewRow.Injection_Speed,
+      Fill_Time: NewRow.Fill_Time,
+      Peak_Inj_Press: NewRow.Peak_Inj_Press,
+    }
+
+    setEditFormData(formValues);
   }
 
   return (
@@ -106,12 +117,12 @@ const App = () => {
         <button onClick={increaseRow}> Add </button>
 
       </div>
-      <div className="container">
-        <form onSubmit={handleEditFormSubmit}>
+      <div className="container viscosity_table" onMouseOut={handleEditFormSubmit}>
+        <form>
           <Table striped bordered hover responsive variant="light">
             <thead>
               <tr>
- 
+
                 <th>
                   <h6> Injection Speed </h6>{" "}
                 </th>
@@ -147,14 +158,19 @@ const App = () => {
             </thead>
             <tbody className="grid_style">
               {NewRow2.map((NewRow, rowId) => (
-
-                <Edit NewRow={NewRow} setId={setId} NewRow2={NewRow2} handleEditFormChange={handleEditFormChange} deleteRow2={deleteRow2} rowId={rowId} />
+                <>
+                  {isRowId === NewRow.id ?
+                    (
+                      <Edit NewRow={NewRow} setId={setId} NewRow2={NewRow2} handleEditFormChange={handleEditFormChange} deleteRow2={deleteRow2} rowId={rowId} editFormData={editFormData} IntensificationRatio={IntensificationRatio} />
+                    )
+                    :
+                    (<Read NewRow={NewRow} NewRow2={NewRow2} setId={setId} deleteRow2={deleteRow2} rowId={rowId} editFormData={editFormData} IntensificationRatio={IntensificationRatio}/>)
+                  }
+                </>
 
               ))}
             </tbody>
           </Table>
-          <button type="submit" className="mt-4"> Calculate </button>
-
         </form>
       </div>
     </>
