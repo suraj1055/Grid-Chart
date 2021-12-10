@@ -8,3 +8,8 @@
     cursor: pointer;
     margin: 2px;
 }
+
+.viscosity_table{
+    height: 380px;
+    overflow: scroll;
+  }
