@@ -1,15 +1,76 @@
-.container{
+/* @import '../node_modules/@syncfusion/ej2-base/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-buttons/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-inputs/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-popups/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-lists/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-navigations/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-splitbuttons/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-dropdowns/styles/material.css';
+@import "../node_modules/@syncfusion/ej2-react-documenteditor/styles/material.css"; */
+
+
+.Cold-Grid-Container{
     display: flex;
-    align-items: center;
-    justify-content: center
-}
-
-.viscocity_icons{
-    cursor: pointer;
-    margin: 2px;
-}
-
-.viscosity_table{
+    justify-content: flex-start;
+    flex-direction: column;
+  }
+  
+  .cold_table{
+    height: 350px;
+    overflow-x: scroll;
+    width: 800px;
+  }
+  
+  .cold_table2{
     height: 380px;
-    overflow: scroll;
+    overflow-x: scroll;
+  }
+  
+  .cold-runner-grid{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .cold-grid{
+    width: 35%;
+  }
+  
+  .cold-chart{
+    width: 62%;
+  }
+  
+  @media (min-height: 768px) and (max-height:1024px){
+    .cold-runner-grid{
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: flex-start;
+      width: 100%;
+      margin: 0;
+    }
+  
+    .cold-grid{
+      width: 60%;
+      margin-bottom: 15px;
+    }
+  
+    .cold-chart{
+      width: 100%;
+    }
+  
+    .cold-heading{
+      width: 200px;
+    }
+  
+    .cold_table2{
+      height: 250px;
+      overflow-x: scroll;
+    }
+  
+    .cold_table{
+      height: 250px;
+      overflow-x: scroll;
+      width: 700px;
+    }
   }
