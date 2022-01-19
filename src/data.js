@@ -1,37 +1,16 @@
-export let data = [
+export let data2 = [
     {
-        "id": 0,
-        "header": "Time",
-        "edit": true,
-        "delete": false
+      "id": 1,
+      "Melt_Temp": "",
+      "Low": "",
+      "High": ""
     },
+
     {
-        "id": 1,
-        "header": "Weight 1",
-        "edit": true,
-        "delete": false
+      "id": 2,
+      "Melt_Temp": "",
+      "Low": "",
+      "High": ""
     }
 ]
 
-export let data2 = [
-    {
-        "id": 0,
-        "edit": true
-    },
-    {
-        "id": 1,
-        "edit": true
-    },
-    {
-        "id": 2,
-        "edit": true
-    },
-    {
-        "id": 3,
-        "edit": true
-    },
-    {
-        "id": 4,
-        "edit": true
-    }
-];
