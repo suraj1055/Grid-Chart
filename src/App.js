@@ -118,7 +118,7 @@ const App = () => {
     { x: parseFloat(NewRow2[0]["Melt_Temp"]), y: parseFloat(NewRow2[0]["Low"]) }
   ]
 
-  // Event to calculate the centroid of the polygon it gives the center coordinate
+  // Event to calculate the centroid of the polygon it gives the center coordinate which we plot on the chart as the center point
   function center(Coordinates) {
 
     function Point(x, y) {
